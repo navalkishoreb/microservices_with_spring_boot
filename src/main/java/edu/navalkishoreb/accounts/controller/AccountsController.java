@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,5 +36,29 @@ public class AccountsController {
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam String mobileNumber) {
         CustomerDto customerDto = accountService.fetchAccountDetails(mobileNumber);
         return ResponseEntity.ok().body(customerDto);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateAccountDetails(@RequestBody CustomerDto customerDto) {
+        boolean isUpdated = accountService.updateAccounts(customerDto);
+        if (isUpdated) {
+            return ResponseEntity.ok()
+                    .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_200).statusMsg(AccountsConstants.MESSAGE_200).build());
+        } else {
+            return ResponseEntity.internalServerError()
+                    .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_500).statusMsg(AccountsConstants.MESSAGE_500).build());
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteAccount(@RequestParam String mobileNumber) {
+        boolean isDeleted = accountService.deleteAccounts(mobileNumber);
+        if (isDeleted) {
+            return ResponseEntity.ok().body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity.internalServerError()
+                    .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_500).statusMsg(AccountsConstants.MESSAGE_500).build());
+        }
+
     }
 }

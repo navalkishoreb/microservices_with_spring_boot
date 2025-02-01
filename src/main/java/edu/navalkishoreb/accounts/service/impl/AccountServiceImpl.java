@@ -73,4 +73,44 @@ public class AccountServiceImpl implements IAccountService {
         customerDto.setAccountsDto(AccountsMapper.toAccountsDto(accounts, new AccountsDto()));
         return customerDto;
     }
+
+    /**
+     * Updates the account details for the given customer.
+     *
+     * @param customerDto the data transfer object containing customer details
+     * @return true if the account details are updated successfully, false otherwise
+     */
+    @Override
+    public boolean updateAccounts(CustomerDto customerDto) {
+        AccountsDto accountsDto = customerDto.getAccountsDto();
+        if (accountsDto == null) {
+            return false;
+        }
+        Accounts accounts = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Accounts", "accountId", accountsDto.getAccountNumber().toString()));
+        AccountsMapper.toAccounts(accountsDto, accounts);
+        accounts = accountsRepository.save(accounts);
+        Long customerId = accounts.getCustomerId();
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "customerId", customerId.toString()));
+        CustomerMapper.mapToCustomer(customerDto, customer);
+        customerRepository.save(customer);
+        return true;
+    }
+
+    /**
+     * Deletes the account associated with the given mobile number.
+     *
+     * @param mobileNumber the mobile number of the customer
+     * @return true if the account is deleted successfully, false otherwise
+     */
+    @Override
+    public boolean deleteAccounts(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() ->
+                new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+        Long customerId = customer.getCustomerId();
+        accountsRepository.deleteByCustomerId(customerId);
+        customerRepository.delete(customer);
+        return true;
+    }
 }
