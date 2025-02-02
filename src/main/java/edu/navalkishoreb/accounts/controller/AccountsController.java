@@ -112,8 +112,12 @@ public class AccountsController {
             return ResponseEntity.ok()
                     .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_200).statusMsg(AccountsConstants.MESSAGE_200).build());
         } else {
-            return ResponseEntity.internalServerError()
-                    .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_500).statusMsg(AccountsConstants.MESSAGE_500).build());
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(ResponseDto.builder().
+                            statusCode(AccountsConstants.STATUS_417).
+                            statusMsg(AccountsConstants.MESSAGE_417_UPDATE).build()
+                    );
         }
     }
 
@@ -146,8 +150,12 @@ public class AccountsController {
         if (isDeleted) {
             return ResponseEntity.ok().body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
         } else {
-            return ResponseEntity.internalServerError()
-                    .body(ResponseDto.builder().statusCode(AccountsConstants.STATUS_500).statusMsg(AccountsConstants.MESSAGE_500).build());
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(ResponseDto.builder().
+                            statusCode(AccountsConstants.STATUS_417).
+                            statusMsg(AccountsConstants.MESSAGE_417_DELETE).build()
+                    );
         }
 
     }
