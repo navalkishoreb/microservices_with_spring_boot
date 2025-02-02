@@ -1,6 +1,5 @@
 package edu.navalkishoreb.accounts.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 import edu.navalkishoreb.accounts.constants.AccountsConstants;
@@ -36,8 +35,6 @@ public class AccountServiceImpl implements IAccountService {
         customerRepository.findByMobileNumber(customer.getMobileNumber()).ifPresent(c -> {
             throw new CustomerAlreadyExistsException(String.format("Customer already exists with mobile number %s", customer.getMobileNumber()));
         });
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anonymous");
         Customer savedCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCustomer));
 
@@ -50,10 +47,7 @@ public class AccountServiceImpl implements IAccountService {
         newAccounts.setAccountNumber(randomAccountNumber);
         newAccounts.setAccountType(AccountsConstants.SAVINGS);
         newAccounts.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccounts.setCreatedBy("Anonymous");
-        newAccounts.setCreatedAt(LocalDateTime.now());
         return newAccounts;
-
     }
 
     /**
