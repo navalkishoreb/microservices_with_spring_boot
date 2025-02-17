@@ -71,7 +71,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             String validationMessage = ((FieldError) error).getDefaultMessage();
             validationErrors.put(fieldName, validationMessage);
         });
-//        return super.handleMethodArgumentNotValid(ex, headers, status, request);
         return ResponseEntity.badRequest().body(validationErrors);
     }
 }
