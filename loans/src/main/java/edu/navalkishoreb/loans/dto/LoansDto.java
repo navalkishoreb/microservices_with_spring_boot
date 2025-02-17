@@ -1,20 +1,24 @@
 package edu.navalkishoreb.loans.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
+@Schema(name = "Loans",
+        description = "Schema to hold Loan information"
+)
 @Data
 public class LoansDto {
 
     @NotEmpty(message = "Mobile Number can not be a null or empty")
-    @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile Number must be 10 digits")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile Number must be 10 digits")
     private String mobileNumber;
 
     @NotEmpty(message = "Loan Number can not be a null or empty")
-    @Pattern(regexp="(^$|[0-9]{12})",message = "LoanNumber must be 12 digits")
+    @Pattern(regexp = "(^$|[0-9]{12})", message = "LoanNumber must be 12 digits")
     private String loanNumber;
 
     @NotEmpty(message = "LoanType can not be a null or empty")
