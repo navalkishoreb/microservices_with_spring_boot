@@ -50,17 +50,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDto> handleCustomerAlreadyExistsException(Exception exception, WebRequest webRequest) {
-        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
-                .apiPath(webRequest.getDescription(false))
-                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR)
-                .errorMessage(exception.getMessage())
-                .errorTime(LocalDateTime.now())
-                .build();
-        return ResponseEntity.internalServerError().body(errorResponseDto);
-    }
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
                                                                   WebRequest request) {
