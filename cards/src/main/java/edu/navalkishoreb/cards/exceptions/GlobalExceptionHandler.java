@@ -55,4 +55,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         });
         return ResponseEntity.badRequest().body(validationErrors);
     }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponseDto> handleGlobalException(Exception exception, WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
+                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR)
+                .errorMessage(exception.getMessage())
+                .errorTime(LocalDateTime.now())
+                .apiPath(webRequest.getDescription(false))
+                .build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
+    }
 }
