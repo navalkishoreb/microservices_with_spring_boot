@@ -1,0 +1,10 @@
+#root image with java jdk
+FROM amazoncorretto:17-alpine3.21-jdk
+
+LABEL maintainer="Naval Barthwal"
+
+#copy jar
+COPY target/loans-1.0.0-SNAPSHOT.jar loans-1.0.0-SNAPSHOT.jar
+
+#execute application
+ENTRYPOINT ["java", "-jar", "loans-1.0.0-SNAPSHOT.jar"]
