@@ -1,5 +1,5 @@
 server:
-    port: 8080
+  port: 8080
 
 spring:
   application:
@@ -19,4 +19,17 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+build:
+  version: "0.0.1"
+
+accounts:
+    message: "Accounts Microservice"
+    contact-details:
+      name: "John Doe"
+      email: "johndoe@go.com"
+    onCallSupport:
+      - "555-01234"
+      - "555-56789"
+
 
