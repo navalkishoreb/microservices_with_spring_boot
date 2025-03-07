@@ -20,11 +20,18 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  config:
+    import:
+      - classpath:application_qa.yml
+      - classpath:application_prod.yml
+  profiles:
+    active: "prod"
+
 build:
-  version: "0.0.1"
+  version: "0.0.3"
 
 accounts:
-    message: "Accounts Microservice"
+    message: "Accounts Microservice Local Development"
     contact-details:
       name: "John Doe"
       email: "johndoe@go.com"
