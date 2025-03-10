@@ -25,7 +25,7 @@ spring:
       - classpath:application_qa.yml
       - classpath:application_prod.yml
   profiles:
-    active: "prod"
+    active:
 
 build:
   version: "0.0.3"
