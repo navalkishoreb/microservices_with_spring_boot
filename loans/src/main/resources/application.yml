@@ -1,5 +1,5 @@
 server:
-    port: 8090
+  port: 8090
 
 spring:
   application:
@@ -20,3 +20,22 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  config:
+    import:
+    - classpath:application_qa.yml
+    - classpath:application_prod.yml
+
+  profiles:
+    active: ""
+
+build:
+  version: "1.0"
+
+loans:
+  message: "Loans Microservice Local Development"
+  contact-details:
+    name: "John Doe"
+    email: "johndoe@go.com"
+  onCallSupport:
+    - "555-01234"
+    - "555-56789"

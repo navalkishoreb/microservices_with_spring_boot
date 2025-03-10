@@ -1,6 +1,7 @@
 package edu.navalkishoreb.loans.controller;
 
 import edu.navalkishoreb.loans.dto.ErrorResponseDto;
+import edu.navalkishoreb.loans.dto.LoansContactInfoDto;
 import edu.navalkishoreb.loans.dto.LoansDto;
 import edu.navalkishoreb.loans.dto.ResponseDto;
 import edu.navalkishoreb.loans.service.ILoansService;
@@ -12,7 +13,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +33,25 @@ import org.springframework.web.bind.annotation.RestController;
         name = "CRUD REST APIs for Loans in EazyBank",
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
 )
-@AllArgsConstructor
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @Validated
 public class LoansController {
 
-    private ILoansService iLoanService;
+    private final ILoansService iLoanService;
+
+    @Value("${build.version}")
+    private String buildInfo;
+
+    @Autowired
+    private Environment environment;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    public LoansController(ILoansService iLoanService){
+        this.iLoanService = iLoanService;
+    }
 
     @Operation(
             summary = "Create Loan REST API",
@@ -156,5 +171,77 @@ public class LoansController {
 
     private String getStatusCode(HttpStatus status) {
         return String.valueOf(status.value());
+    }
+
+
+
+    @Operation(
+            summary = "Get Build Info",
+            description = "REST API to get build info"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity.ok(buildInfo);
+    }
+
+    @Operation(
+            summary = "Get Java Version Info",
+            description = "REST API to get java version info"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+        return ResponseEntity.ok(environment.getProperty("JAVA_HOME"));
+    }
+
+
+    @Operation(
+            summary = "Get Contact information",
+            description = "REST API to get Loans Service Contact information"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo(){
+        return ResponseEntity.ok().body(loansContactInfoDto);
     }
 }
