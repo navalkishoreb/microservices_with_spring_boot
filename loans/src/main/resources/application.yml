@@ -3,7 +3,10 @@ server:
 
 spring:
   application:
-    name: accounts
+    name: "loans"
+
+  profiles:
+    active: "prod"
 
   datasource:
     url: jdbc:h2:mem:testdb
@@ -21,21 +24,5 @@ spring:
     show-sql: true
 
   config:
-    import:
-    - classpath:application_qa.yml
-    - classpath:application_prod.yml
+    import: "optional:configserver:http://localhost:8071"
 
-  profiles:
-    active: ""
-
-build:
-  version: "1.0"
-
-loans:
-  message: "Loans Microservice Local Development"
-  contact-details:
-    name: "John Doe"
-    email: "johndoe@go.com"
-  onCallSupport:
-    - "555-01234"
-    - "555-56789"
