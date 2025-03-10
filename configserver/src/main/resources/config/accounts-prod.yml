@@ -1,0 +1,13 @@
+build:
+  version: "0.0.1"
+
+accounts:
+  message: "Production Accounts Microservice"
+  contact-details:
+    name: "accounts Team Prod"
+    email: "accounts@go.com"
+  onCallSupport:
+    - "555-01234"
+    - "555-56789"
+
+

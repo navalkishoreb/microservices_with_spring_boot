@@ -1,0 +1,13 @@
+build:
+  version: "0.0.2"
+
+accounts:
+    message: "QA Accounts Microservice"
+    contact-details:
+      name: "QA team"
+      email: "qa_team@go.com"
+    onCallSupport:
+      - "555-01234"
+      - "555-56789"
+
+

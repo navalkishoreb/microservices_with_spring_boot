@@ -1,0 +1,8 @@
+loans:
+  message: "Loans Microservice PROD Development"
+  contact-details:
+    name: "John Doe"
+    email: "johndoe@go.com"
+  onCallSupport:
+    - "555-01234"
+    - "555-56789"
