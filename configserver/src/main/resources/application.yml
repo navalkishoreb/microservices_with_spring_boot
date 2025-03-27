@@ -11,7 +11,7 @@ spring:
     config:
       server:
         git:
-          uri: git@github.com-personal:navalkishoreb/microservice-with-spring-boot-config-server.git
+          uri: "git@github.com:navalkishoreb/microservice-with-spring-boot-config-server.git"
           default-label: main
           timeout: 5
           clone-on-start: true
