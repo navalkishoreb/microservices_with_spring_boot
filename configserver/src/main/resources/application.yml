@@ -20,11 +20,11 @@ spring:
   #          search-locations: "classpath:/config"
   #          search-locations: file:///Users/nkishorebarthwal/Documents/Learning/udemy_course/config
 
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+#  rabbitmq:
+#    host: "localhost"
+#    port: 5672
+#    username: "guest"
+#    password: "guest"
 
 server:
   port: 8071
